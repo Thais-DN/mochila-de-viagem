@@ -1,6 +1,20 @@
 const form = document.getElementById("novoItem");
 const lista = document.getElementById("lista");
 const itens = JSON.parse(localStorage.getItem("itens")) || [];
+const botaoSubmit = document.querySelector(".cadastrar");
+
+function verificarCampos() {
+    const nome = document.querySelector('[name="nome"]').value;
+    const quantidade = document.querySelector('[name="quantidade"]').value;
+    botaoSubmit.disabled = !nome || !quantidade;
+}
+
+document
+    .querySelector('[name="nome"]')
+    .addEventListener("input", verificarCampos);
+document
+    .querySelector('[name="quantidade"]')
+    .addEventListener("input", verificarCampos);
 
 itens.forEach((elemento) => {
     criaElemento(elemento);
@@ -41,6 +55,8 @@ form.addEventListener("submit", (evento) => {
 
     nome.value = "";
     quantidade.value = "";
+
+    verificarCampos();
 });
 
 function criaElemento(item) {
